@@ -190,30 +190,15 @@ function renderProgram() {
         <p style="color:#718096;margin-bottom:24px">Deniz, kum ve gunes tatili icin en guzel sahil beldeleri</p>
         <div class="program-list">`;
 
-    const days = [
-        { title: "1. Gun - Bodrum", places: [107] },
-        { title: "2. Gun - Marmaris", places: [103] },
-        { title: "3. Gun - Oludeniz & Fethiye", places: [101, 109] },
-        { title: "4. Gun - Kas & Kemer", places: [110, 102] },
-        { title: "5. Gun - Side & Alanya", places: [105, 108] },
-        { title: "6. Gun - Cesme & Kusadasi", places: [104, 106] }
-    ];
-
-    days.forEach(day => {
-        html += `<div class="day-card"><div class="day-header">${day.title}</div>`;
-        day.places.forEach(id => {
-            const p = holidays.find(pl => pl.id === id);
-            if (!p) return;
-            html += `
-                <div class="day-place" onclick="showHolidayDetail(${p.id})">
-                    <img class="day-img" src="${p.image}" alt="${p.name}" loading="lazy">
-                    <div class="day-info">
-                        <strong>${p.name}</strong>
-                        <span>${p.city}</span>
-                    </div>
-                </div>`;
-        });
-        html += '</div>';
+    holidays.forEach(p => {
+        html += `
+            <div class="day-place" onclick="showHolidayDetail(${p.id})">
+                <img class="day-img" src="${p.image}" alt="${p.name}" loading="lazy">
+                <div class="day-info">
+                    <strong>${p.name}</strong>
+                    <span>${p.city}</span>
+                </div>
+            </div>`;
     });
 
     html += '</div>';
