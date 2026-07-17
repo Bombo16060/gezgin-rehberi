@@ -86,6 +86,7 @@ function navigate(view, param) {
     if (view === 'home') renderHome();
     else if (view === 'region') renderRegion(param);
     else if (view === 'detail') renderDetail(param);
+    else if (view === 'program') renderProgram();
 }
 
 function renderHome() {
@@ -166,6 +167,50 @@ function renderDetail(id) {
             <h3>&#127977; Konaklama Imkanlari</h3>
             <p>${p.accommodation}</p>
         </div>`;
+}
+
+function renderProgram() {
+    const allPlaces = getAllPlaces();
+    const vacationPlaces = allPlaces.filter(p =>
+        p.category === "Dogal Alan" || p.name.includes("Alacati") || p.name.includes("Olimpos")
+    );
+
+    const content = document.getElementById('content');
+    let html = `
+        <a class="back-link" href="#" onclick="navigate('home')">&larr; Ana sayfaya don</a>
+        <h2 style="font-size:24px;margin-bottom:4px">&#127796; Tatil Programi</h2>
+        <p style="color:#718096;margin-bottom:24px">Tatil icin en uygun yerler, gun gun program</p>
+        <div class="program-list">`;
+
+    const days = [
+        { title: "1. Gun - Istanbul", places: [1, 2, 3, 4] },
+        { title: "2. Gun - Kapadokya", places: [9] },
+        { title: "3. Gun - Ege", places: [5, 6, 7, 8] },
+        { title: "4. Gun - Akdeniz", places: [12, 13, 14] },
+        { title: "5. Gun - Karadeniz", places: [15, 16, 17] },
+        { title: "6. Gun - Dogu Anadolu", places: [18, 19, 20] },
+        { title: "7. Gun - Guneydogu", places: [21, 22, 23] }
+    ];
+
+    days.forEach(day => {
+        html += `<div class="day-card"><div class="day-header">${day.title}</div>`;
+        day.places.forEach(id => {
+            const p = allPlaces.find(pl => pl.id === id);
+            if (!p) return;
+            html += `
+                <div class="day-place" onclick="navigate('detail', ${p.id})">
+                    <img class="day-img" src="${p.image}" alt="${p.name}" loading="lazy">
+                    <div class="day-info">
+                        <strong>${p.name}</strong>
+                        <span>${p.city} - ${p.category}</span>
+                    </div>
+                </div>`;
+        });
+        html += '</div>';
+    });
+
+    html += '</div>';
+    content.innerHTML = html;
 }
 
 document.addEventListener('DOMContentLoaded', () => navigate('home'));

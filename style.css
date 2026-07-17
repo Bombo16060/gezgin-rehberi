@@ -298,6 +298,65 @@ footer {
     font-size: 16px;
 }
 
+.program-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.day-card {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,.06);
+}
+
+.day-header {
+    background: #0b6e4f;
+    color: #fff;
+    padding: 14px 20px;
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.day-place {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 20px;
+    cursor: pointer;
+    transition: background .15s;
+    border-top: 1px solid #f0f4f8;
+}
+
+.day-place:hover {
+    background: #f7fafc;
+}
+
+.day-img {
+    width: 60px;
+    height: 60px;
+    border-radius: 10px;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.day-info {
+    flex: 1;
+}
+
+.day-info strong {
+    display: block;
+    font-size: 15px;
+    color: #1a202c;
+    margin-bottom: 2px;
+}
+
+.day-info span {
+    font-size: 13px;
+    color: #718096;
+}
+
 @media (max-width: 600px) {
     header {
         padding: 14px 16px;
