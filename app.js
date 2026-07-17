@@ -169,40 +169,47 @@ function renderDetail(id) {
         </div>`;
 }
 
-function renderProgram() {
-    const allPlaces = getAllPlaces();
-    const vacationPlaces = allPlaces.filter(p =>
-        p.category === "Dogal Alan" || p.name.includes("Alacati") || p.name.includes("Olimpos")
-    );
+const holidays = [
+    { id: 101, name: "Oludeniz", city: "Fethiye / Mugla", region: "Ege", image: "https://picsum.photos/seed/oludeniz/800/400", description: "Turkuaz rengi denizi ve belcekiz plajiyla dunyanin en guzel sahillerinden biri. Oludeniz'de yamaç parasutu de yapabilirsiniz.", accommodation: "Oludeniz'de her butceye uygun otel ve pansiyon bulunur. Sundia Exclusive Liberty, Jade Residence ve Hilal Beach Hotel populer seceneklerdir." },
+    { id: 102, name: "Kemer", city: "Antalya", region: "Akdeniz", image: "https://picsum.photos/seed/kemer/800/400", description: "Toros daglariyla cevrili muhtesem koylari ve plajlariyla unlu bir tatil beldesi. Deniz, kum ve gunesin keyfini cikarin.", accommodation: "Kemer'de her seviyede otel mevcuttur. Robinson Club Pamfilya, Limak Limra Hotel ve Aska Lara Resort en lüks otellerdendir." },
+    { id: 103, name: "Marmaris", city: "Mugla", region: "Ege", image: "https://picsum.photos/seed/marmaris/800/400", description: "Camlari, marinası ve hareketli gece hayatiyla unlu olan Marmaris, Ege'nin incisi olarak bilinir.", accommodation: "Marmaris'te her butceye uygun otel vardir. D-Resort Grand Azur, Sentido Freedom Hotel ve Aqua Hotel populer konaklama noktalaridir." },
+    { id: 104, name: "Cesme", city: "Izmir", region: "Ege", image: "https://picsum.photos/seed/cesme/800/400", description: "Turkuaz sahilleri, termal sulari ve ruzgar sorfuyle unlu olan Cesme, Istanbul ve Izmir'in en populer tatil beldelerinden biridir.", accommodation: "Cesme'de butik oteller ve tatil koyleri bulunur. Cesme Marina Hotel, Sakiz Otel ve Divan Cesme Otel iyi seceneklerdir." },
+    { id: 105, name: "Side", city: "Antalya", region: "Akdeniz", image: "https://picsum.photos/seed/side/800/400", description: "Antik kent kalintilariyla ic ice olan sahil seridi, Side'yi essiz bir tatil noktasi yapmaktadir.", accommodation: "Side'de cok sayida her seviyede otel bulunur. Side Star Beach Club, Paloma Oceana Resort ve Aska Lara Hotel populer seceneklerdendir." },
+    { id: 106, name: "Kusadasi", city: "Izmir / Aydin", region: "Ege", image: "https://picsum.photos/seed/kusadasi/800/400", description: "Turistik canliligi, plajlari ve Efes Antik Kenti'ne yakınligiyla Kusadasi tatilcilerin vazgecmezidir.", accommodation: "Kusadasi'nda lüks oteller ve butik pansiyonlar mevcuttur. Charisma Hotel, Hilton Hotel ve Perla Kusadasi otelleri onerilenlerdendir." },
+    { id: 107, name: "Bodrum", city: "Mugla", region: "Ege", image: "https://picsum.photos/seed/bodrum/800/400", description: "Beyaz badanali evleri, lüks marinalari ve turkuaz sahilleriyle Bodrum, Ege tatilinin en gozde noktasidir.", accommodation: "Bodrum'da dunyaca unlu oteller bulunur. Mandarin Oriental, Maison Otel, The Marmara Bodrum ve Carya Hotel en lüks seceneklerdendir." },
+    { id: 108, name: "Alanya", city: "Antalya", region: "Akdeniz", image: "https://picsum.photos/seed/alanya/800/400", description: "Kalesi, Kleopatra plaji ve dogal guzellikleriyle Alanya, Akdeniz'in en popüler tatil merkezlerinden biridir.", accommodation: "Alanya'da her butceye uygun binlerce otel bulunur. Club Hotel Falcon, Haydarpasha Palace ve Elysium Hotel iyi seceneklerdir." },
+    { id: 109, name: "Fethiye", city: "Mugla", region: "Ege", image: "https://picsum.photos/seed/fethiye/800/400", description: "Koylari, ada turlari ve dogal guzellikleriyle Fethiye, hem deniz tatili hem de doga severler icin ideal bir noktadir.", accommodation: "Fethiye'de her seviyede konaklama secenegi vardir. Yacht Marina Hotel, Ece Hotel ve Hemera Hotel populer seceneklerdendir." },
+    { id: 110, name: "Kas", city: "Antalya", region: "Akdeniz", image: "https://picsum.photos/seed/kas/800/400", description: "Sakin atmosferi, dalış noktalari ve butik otelleriyle Kas, huzurlu bir tatil arayanlarin tercihidir.", accommodation: "Kas'ta butik oteler ve pansiyonlar bulunur. Kas Otel, Hideaway Hotel ve Smile Garden Otel tavsiye edilenlerdendir." }
+];
 
+function renderProgram() {
     const content = document.getElementById('content');
     let html = `
         <a class="back-link" href="#" onclick="navigate('home')">&larr; Ana sayfaya don</a>
-        <h2 style="font-size:24px;margin-bottom:4px">&#127796; Tatil Programi</h2>
-        <p style="color:#718096;margin-bottom:24px">Tatil icin en uygun yerler, gun gun program</p>
+        <h2 style="font-size:24px;margin-bottom:4px">&#127796; Tatil Programi - Sahil Yerleri</h2>
+        <p style="color:#718096;margin-bottom:24px">Deniz, kum ve gunes tatili icin en guzel sahil beldeleri</p>
         <div class="program-list">`;
 
     const days = [
-        { title: "1. Gun - Istanbul", places: [1, 2, 3, 4] },
-        { title: "2. Gun - Kapadokya", places: [9] },
-        { title: "3. Gun - Ege", places: [5, 6, 7, 8] },
-        { title: "4. Gun - Akdeniz", places: [12, 13, 14] },
-        { title: "5. Gun - Karadeniz", places: [15, 16, 17] },
-        { title: "6. Gun - Dogu Anadolu", places: [18, 19, 20] },
-        { title: "7. Gun - Guneydogu", places: [21, 22, 23] }
+        { title: "1. Gun - Bodrum", places: [107] },
+        { title: "2. Gun - Marmaris", places: [103] },
+        { title: "3. Gun - Oludeniz & Fethiye", places: [101, 109] },
+        { title: "4. Gun - Kas & Kemer", places: [110, 102] },
+        { title: "5. Gun - Side & Alanya", places: [105, 108] },
+        { title: "6. Gun - Cesme & Kusadasi", places: [104, 106] }
     ];
 
     days.forEach(day => {
         html += `<div class="day-card"><div class="day-header">${day.title}</div>`;
         day.places.forEach(id => {
-            const p = allPlaces.find(pl => pl.id === id);
+            const p = holidays.find(pl => pl.id === id);
             if (!p) return;
             html += `
-                <div class="day-place" onclick="navigate('detail', ${p.id})">
+                <div class="day-place" onclick="showHolidayDetail(${p.id})">
                     <img class="day-img" src="${p.image}" alt="${p.name}" loading="lazy">
                     <div class="day-info">
                         <strong>${p.name}</strong>
-                        <span>${p.city} - ${p.category}</span>
+                        <span>${p.city}</span>
                     </div>
                 </div>`;
         });
@@ -211,6 +218,30 @@ function renderProgram() {
 
     html += '</div>';
     content.innerHTML = html;
+}
+
+function showHolidayDetail(id) {
+    const p = holidays.find(pl => pl.id === id);
+    if (!p) return;
+
+    const content = document.getElementById('content');
+    content.innerHTML = `
+        <a class="back-link" href="#" onclick="navigate('program')">&larr; Tatil programina don</a>
+        <img class="detail-image" src="${p.image}" alt="${p.name}" loading="lazy">
+        <div class="detail-header">
+            <h2>${p.name}</h2>
+            <div class="tags">
+                <span>${p.region} Bolgesi</span>
+                <span>${p.city}</span>
+            </div>
+        </div>
+        <div class="detail-body">
+            <p>${p.description}</p>
+        </div>
+        <div class="accommodation">
+            <h3>&#127977; Konaklama Imkanlari</h3>
+            <p>${p.accommodation}</p>
+        </div>`;
 }
 
 document.addEventListener('DOMContentLoaded', () => navigate('home'));
