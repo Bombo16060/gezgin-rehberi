@@ -87,6 +87,7 @@ function navigate(view, param) {
     else if (view === 'region') renderRegion(param);
     else if (view === 'detail') renderDetail(param);
     else if (view === 'program') renderProgram();
+    else if (view === 'support') renderSupport();
 }
 
 function renderHome() {
@@ -227,6 +228,66 @@ function showHolidayDetail(id) {
             <h3>&#127977; Konaklama Imkanlari</h3>
             <p>${p.accommodation}</p>
         </div>`;
+}
+
+const botResponses = [
+    { keywords: ["merhaba", "selam", "hey", "iyi gunler"], reply: "Merhaba! Gezgin Rehberi AI botuna hosgeldin. Sana nasil yardimci olabilirim? Tatil planlamana yardim edeyim." },
+    { keywords: ["deniz", "sahil", "plaj", "kum", "tatil"], reply: "Sahil tatili icin harika secenekler: Bodrum, Marmaris, Oludeniz, Kemer, Side, Alanya, Cesme, Kusadasi, Kas. Hangisiyle ilgileniyorsun?" },
+    { keywords: ["tarih", "tarihi", "arkeoloji", "antik"], reply: "Tarihi yerler icin Istanbul (Ayasofya, Topkapi), Efes Antik Kenti, Kapadokya, Nemrut Dagi, Mardin, Hasankeyf harika secenekler. Detay istersen bolgelere goz at." },
+    { keywords: ["kapadokya", "balon", "peri bacasi"], reply: "Kapadokya muhtesem bir doga harikasi! Balon turlarina katilabilir, peri bacalarini gezebilir, magara otellerinde kalabilirsin. 2-3 gun ideal bir tatil olur." },
+    { keywords: ["istanbul", "stanbul"], reply: "Istanbul'da gorulecek cok yer var: Ayasofya, Sultanahmet Camii, Topkapi Sarayi, Yerebatan Sarnici, Galata Kulesi, Kapali Carsi. En az 3-4 gun ayirmalisin." },
+    { keywords: ["ege", "efe", "izmir"], reply: "Ege Bolgesi'nde Efes Antik Kenti, Pamukkale, Alacati, Bodrum, Cesme, Kusadasi gorulecek yerler arasinda. Ege mutfagi da dillere destandir!" },
+    { keywords: ["akdeniz", "antalya"], reply: "Akdeniz'de Antalya, Kemer, Side, Alanya, Kas, Olimpos, Aspendos gorulebilir. Deniz, kum ve tarih bir arada." },
+    { keywords: ["karadeniz", "trabzon", "riz", "uzungol"], reply: "Karadeniz'de Uzungol, Sumela Manastiri, Ayder Yaylasi, Yayla turizmi ve muhtesem doga sizi bekliyor. Karadeniz mutfagini da kesfetmeyi unutma." },
+    { keywords: ["dogu", "van", "nemrut", "kars"], reply: "Dogu Anadolu'da Van Golu, Nemrut Dagi, Ishak Pasa Sarayi, Ani Harabeleri gorulecek yerlerdendir. Dogu'nun essiz kulturel zenginligini kesfedin." },
+    { keywords: ["guneydogu", "mardin", "urfa", "diyarbakir", "gaziantep"], reply: "Guneydogu'da Mardin tas evleri, Balikligol, Hasankeyf, Gaziantep baklavasi ve mutfagiyla unlu. Tarih ve lezzet dolu bir tatil icin birebir." },
+    { keywords: ["konaklama", "otel", "kal", "nerede kal"], reply: "Her bolgede konaklama secenekleri var. Butik oteller, termal oteller, magara oteller, her butceye uygun secenekler mevcut. Hangi bolgeyle ilgileniyorsun?" },
+    { keywords: ["nasilsin", "naber", "iyi misin"], reply: "Ben iyiyim, sana yardim etmek icin buradayim! Sen nasilsin? Tatil planin var mi?" },
+    { keywords: ["tesekkur", "saol", "eyvallah", "teşekkür"], reply: "Rica ederim! Baska bir konuda yardimci olabilir miyim?" },
+    { keywords: ["ne onerirsin", "oner", "tavsiye", "ner","gez"], reply: "Turkiye'nin her bolgesi ayri guzel. Ilk kez gideceksen Istanbul, Kapadokya ve Ege sahillerini oneririm. Ne tur bir tatil istiyorsun?" }
+];
+
+function getBotReply(msg) {
+    const lower = msg.toLowerCase();
+    for (const item of botResponses) {
+        for (const kw of item.keywords) {
+            if (lower.includes(kw)) return item.reply;
+        }
+    }
+    return "Anlamadim, biraz daha acik yazar misin? Deniz tatili, tarih, konaklama veya belirli bir sehir hakkinda soru sorabilirsin.";
+}
+
+function renderSupport() {
+    const content = document.getElementById('content');
+    content.innerHTML = `
+        <h2 style="font-size:24px;margin-bottom:4px">&#129302; Destek - AI Tatil Asistani</h2>
+        <p style="color:#718096;margin-bottom:20px">Tatil planlamana yardimci olayim. Bana soru sor!</p>
+        <div class="chat-container" id="chatContainer">
+            <div class="chat-msg bot">Merhaba! Ben Gezgin Rehberi AI asistaniyim. Tatil planlamana yardimci olabilirim. Deniz tatili, tarihi yerler, konaklama veya belirli bir bolge hakkinda soru sorabilirsin.</div>
+        </div>
+        <div class="chat-input-wrap">
+            <input class="chat-input" id="chatInput" placeholder="Mesajini yaz..." onkeydown="if(event.key==='Enter') sendMessage()">
+            <button class="chat-send" onclick="sendMessage()">Gonder</button>
+        </div>`;
+    setTimeout(() => document.getElementById('chatInput').focus(), 100);
+}
+
+function sendMessage() {
+    const input = document.getElementById('chatInput');
+    const msg = input.value.trim();
+    if (!msg) return;
+
+    const container = document.getElementById('chatContainer');
+    container.innerHTML += `<div class="chat-msg user">${msg}</div>`;
+
+    setTimeout(() => {
+        const reply = getBotReply(msg);
+        container.innerHTML += `<div class="chat-msg bot">${reply}</div>`;
+        container.scrollTop = container.scrollHeight;
+    }, 300);
+
+    input.value = '';
+    container.scrollTop = container.scrollHeight;
 }
 
 document.addEventListener('DOMContentLoaded', () => navigate('home'));
