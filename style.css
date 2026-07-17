@@ -97,6 +97,49 @@ main {
     line-height: 1.6;
 }
 
+.region-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.region-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 32px 20px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,.06);
+    cursor: pointer;
+    transition: transform .2s, box-shadow .2s;
+    animation: fadeUp .4s ease both;
+}
+
+.region-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 24px rgba(0,0,0,.12);
+}
+
+.region-icon {
+    font-size: 48px;
+    margin-bottom: 12px;
+}
+
+.region-card h3 {
+    font-size: 18px;
+    color: #0b6e4f;
+    margin-bottom: 4px;
+}
+
+.region-card .count {
+    font-size: 13px;
+    color: #718096;
+}
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
 .detail-header {
     margin-bottom: 24px;
 }
